@@ -84,6 +84,11 @@ public class Conta{
     }
 
     public void mostrarHistorico(){
-        System.out.println(this.historico);
+        if (this.historico.size() <= 0){
+            System.out.println("Não há transações no momento...");
+        }else{
+            System.out.println(this.historico);
+        }
+        
     }
 }
