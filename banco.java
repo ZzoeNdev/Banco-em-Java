@@ -45,6 +45,7 @@ public class banco {
         boolean contaCriada = false;
         Conta minhaConta = null;
         Conta itaroConta = new Conta("Itaro");
+        itaroConta.ativarConta();
 
         System.out.println("Deseja criar uma conta? S/N");
         String resposta = read.nextLine();
@@ -66,6 +67,7 @@ public class banco {
         //Acesso saldo da minha conta e decido o valor dele
         minhaConta.setSaldo(1000);
         System.out.println("1. Acessar Conta \n2. Sair");
+        minhaConta.Transferir(500, itaroConta);
         resposta = read.nextLine();
 
         while(!sair){
@@ -110,88 +112,5 @@ public class banco {
     }
     }
     }
-
-//POO da Conta (Classe)
-class Conta{
-
-    private ArrayList<String> historico = new ArrayList<> ();
-    public String nome;
-    private boolean contaAtivada;
-    //Cria a variavel do saldo privado
-    private int saldo;
-
-    public Conta(String nomeDaConta){
-        this.nome = nomeDaConta;
-        this.contaAtivada = false;
-        this.saldo = 0;
-    }
-
-    //Metodo (função) de definir o saldo pegando o valor da variavel que passei la em cima
-    public void setSaldo(int valorSaldo){
-        if (contaAtivada){
-            if (valorSaldo >= 0){
-                //Falo que o saldo é oq esta presente nessa classe
-                this.saldo = valorSaldo;
-            }else{
-                System.out.println("O valor tem q ser positivo");
-            }
-        }else{
-            System.out.println("Sua conta "+this.nome+" não esta ativa");
-        }
-    }
-
-    //Aqui é so para pegar o saldo, ele nn usa void somente o tipo, pois ele retornara algo, no caso, o saldo
-    public int getSaldo(){
-        return this.saldo;
-    }
-    //Usamos o void quando apenas queremos executar calculos ou algo direto, como abaixo
-    //Usamos esse metodo (função) para fazer o desconto do valor que foi desejado no saldo
-    public void sacar(int valorSaque){
-        if (contaAtivada){
-            if (valorSaque <= this.saldo){
-                this.saldo -= valorSaque;
-                System.out.println("Saque efetuado");
-            }else{
-                System.out.println("Não há saldo");
-            }
-        }else{
-            System.out.println("Sua conta não esta ativa");
-        }
-    }
-
-    public void deposito(int valorDeposito){
-        if(contaAtivada){
-            if(valorDeposito >= 0){
-            this.saldo += valorDeposito
-            }else{
-                
-            }
-        }else{
-            System.out.println("A sua conta não esta ativada")
-        }
-    }
-
-    //Ativação da conta
-    public void ativarConta(){
-        contaAtivada = true;
-        System.out.println("Sua conta foi ativada com sucesso! \n");
-    }
-
-    public void mostrarHistorico(){
-        System.out.println(this.historico);
-    }
-
-    public void Transferir(int valorTranferencia, Conta contaDestinatario){
-        if (valorTranferencia <= this.saldo && contaAtivada){
-            this.saldo -= valorTranferencia;
-            contaDestinatario.setSaldo(contaDestinatario.getSaldo()+valorTranferencia);
-            System.out.println("Tranferencia executada com sucesso! \n");
-            this.historico.add("Você enviou R$" + valorTranferencia + " para " + contaDestinatario.nome + "\n");
-            contaDestinatario.historico.add("Você recebeu R$" + valorTranferencia + " de " + this.nome + "\n");
-        }
-    }
-
-}
-
 
 
