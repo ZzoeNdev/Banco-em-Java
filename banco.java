@@ -67,14 +67,13 @@ public class banco {
         //Acesso saldo da minha conta e decido o valor dele
         minhaConta.setSaldo(1000);
         System.out.println("1. Acessar Conta \n2. Sair");
-        minhaConta.Transferir(500, itaroConta);
         resposta = read.nextLine();
 
         while(!sair){
         
         if (resposta.equalsIgnoreCase("1")){
             System.out.println("---Menu Conta--- \nSeja muito bem-vindo(a)");
-            System.out.println("1. Sacar \n2.Depositar \n3.Transferir \n4.Ver Saldo \nDigite Sair para sair");
+            System.out.println("1. Sacar \n2.Depositar \n3.Transferir \n4.Ver Saldo \n5.Ver Extrato \nDigite Sair para sair");
 
             resposta = read.nextLine();
 
@@ -99,10 +98,21 @@ public class banco {
                 resposta = "1";
         }
 
+        if(resposta.equalsIgnoreCase("4")){
+                System.out.println("Seu saldo é: " + minhaConta.getSaldo());
+                resposta = "1";
+
+        }
+
+            if(resposta.equalsIgnoreCase("5")){
+                minhaConta.mostrarHistorico();
+                resposta = "1";
+
         }
 
         if (resposta.equalsIgnoreCase("sair") || resposta.equalsIgnoreCase("2")){
                 sair = true;
+        }
         }
 
         }

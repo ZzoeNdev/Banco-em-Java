@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 //POO da Conta (Classe)
 public class Conta{
-    public String nome;
+    private String nome;
     private boolean contaAtivada;
     //Cria a variavel do saldo privado
     private int saldo;
@@ -12,6 +12,10 @@ public class Conta{
         this.nome = nomeDaConta;
         this.contaAtivada = false;
         this.saldo = 0;
+    }
+
+    public String getNome(){
+        return this.nome;
     }
 
     //Metodo (função) de definir o saldo pegando o valor da variavel que passei la em cima
@@ -82,5 +86,4 @@ public class Conta{
     public void mostrarHistorico(){
         System.out.println(this.historico);
     }
-
 }

@@ -8,8 +8,8 @@ public class Transferencia{
     public Transferencia(int valorDeTransferencia, String tipoDeTransferencia, Conta remetenteTransferencia, Conta destinoTransferencia){
         this.valor = valorDeTransferencia;
         this.tipo = tipoDeTransferencia;
-        this.remetente = remetenteTransferencia.nome;
-        this.destino = destinoTransferencia.nome;
+        this.remetente = remetenteTransferencia.getNome();
+        this.destino = destinoTransferencia.getNome();
     }
 
     @Override
