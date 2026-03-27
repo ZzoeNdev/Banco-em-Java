@@ -44,6 +44,8 @@ public class banco {
         boolean sair = false;
         boolean contaCriada = false;
         Conta minhaConta = null;
+
+        ArrayList<Conta> Contas = new ArrayList<> ();
         Conta itaroConta = new Conta("Itaro");
         itaroConta.ativarConta();
 
@@ -54,6 +56,9 @@ public class banco {
             //Crio a minha conta no banco
             minhaConta = new Conta("Enzzo");
             contaCriada = true;
+            Contas.add(minhaConta);
+            Contas.add(itaroConta);
+            System.out.println(Contas.size());
         }else if (resposta.equalsIgnoreCase("N")){
             System.out.println("Encerrando...");
             read.close();
@@ -94,8 +99,29 @@ public class banco {
         }
         
             if(resposta.equalsIgnoreCase("3")){
-                System.out.println("Seu saldo atual é: " + minhaConta.getSaldo());
-                resposta = "1";
+                System.out.println("Qual valor deseja transferir?");
+                int valorDesejado = read.nextInt();
+                read.nextLine();
+                System.out.println("Para quem deseja transferir?");
+                String destinoDesejado = read.nextLine();
+
+                if(destinoDesejado.equalsIgnoreCase(minhaConta.getNome())){
+                    System.out.println("Não pode enviar dinheiro pra si mesmo");
+                }
+
+                boolean contaEncontrada = false;
+                for (int i = 0; i < Contas.size(); i++){
+                    if(Contas.get(i).getNome().equalsIgnoreCase(destinoDesejado)){
+                        minhaConta.transferir(valorDesejado, Contas.get(i));
+                        contaEncontrada = true;
+                        break;
+                    }
+                }
+
+                if(!contaEncontrada){
+                    System.out.println("Usuário não encontrado...");
+                }
+            resposta = "1";
         }
 
         if(resposta.equalsIgnoreCase("4")){

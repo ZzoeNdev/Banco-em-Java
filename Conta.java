@@ -63,7 +63,7 @@ public class Conta{
         }
     }
 
-    public void Transferir(int valorDeTransferencia, Conta destinoTransferencia){
+    public void transferir(int valorDeTransferencia, Conta destinoTransferencia){
         if (valorDeTransferencia <= this.saldo && contaAtivada && valorDeTransferencia > 0){
             this.saldo -= valorDeTransferencia;
             destinoTransferencia.setSaldo(destinoTransferencia.getSaldo()+valorDeTransferencia);
