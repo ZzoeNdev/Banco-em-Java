@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 //POO da Conta (Classe)
 public class Conta{
+    Random random = new Random();
+    private int id = random.nextInt(5000);
     private String nome;
     private boolean contaAtivada;
     //Cria a variavel do saldo privado
@@ -16,6 +19,10 @@ public class Conta{
 
     public String getNome(){
         return this.nome;
+    }
+
+    public int getId(){
+        return this.id;
     }
 
     //Metodo (função) de definir o saldo pegando o valor da variavel que passei la em cima

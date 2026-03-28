@@ -48,6 +48,8 @@ public class banco {
         ArrayList<Conta> Contas = new ArrayList<> ();
         Conta itaroConta = new Conta("Itaro");
         itaroConta.ativarConta();
+        Conta mateusConta = new Conta("Mateus");
+        mateusConta.ativarConta();
 
         System.out.println("Deseja criar uma conta? S/N");
         String resposta = read.nextLine();
@@ -58,6 +60,7 @@ public class banco {
             contaCriada = true;
             Contas.add(minhaConta);
             Contas.add(itaroConta);
+            Contas.add(mateusConta);
             System.out.println(Contas.size());
         }else if (resposta.equalsIgnoreCase("N")){
             System.out.println("Encerrando...");
@@ -78,7 +81,7 @@ public class banco {
         
         if (resposta.equalsIgnoreCase("1")){
             System.out.println("---Menu Conta--- \nSeja muito bem-vindo(a)");
-            System.out.println("1. Sacar \n2.Depositar \n3.Transferir \n4.Ver Saldo \n5.Ver Extrato \nDigite Sair para sair");
+            System.out.println("1. Sacar \n2.Depositar \n3.Transferir \n4.Ver Saldo \n5.Ver Extrato \n6.Ver Dados da Conta \nDigite Sair para sair");
 
             resposta = read.nextLine();
 
@@ -130,13 +133,20 @@ public class banco {
 
         }
 
-            if(resposta.equalsIgnoreCase("5")){
+        if(resposta.equalsIgnoreCase("5")){
                 minhaConta.mostrarHistorico();
                 resposta = "1";
 
         }
 
-        if (resposta.equalsIgnoreCase("sair") || resposta.equalsIgnoreCase("2")){
+        if(resposta.equalsIgnoreCase("6")){
+                System.out.println("Nome: "+minhaConta.getNome()+"\nId: "+minhaConta.getId()+"\nSaldo: R$"+minhaConta.getSaldo());
+                System.out.println("Nome: "+itaroConta.getNome()+"\nId: "+itaroConta.getId()+"\nSaldo: R$"+itaroConta.getSaldo());
+                System.out.println("Nome: "+mateusConta.getNome()+"\nId: "+mateusConta.getId()+"\nSaldo: R$"+mateusConta.getSaldo());
+
+        }
+
+        if (resposta.equalsIgnoreCase("sair")){
                 sair = true;
         }
         }
