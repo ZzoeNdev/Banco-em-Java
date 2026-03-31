@@ -16,7 +16,7 @@ public class Conta{
         this.contaAtivada = false;
         this.saldo = 0;
     }
-
+ 
     public String getNome(){
         return this.nome;
     }
@@ -62,6 +62,8 @@ public class Conta{
         if(contaAtivada){
             if(valorDeposito >= 0){
             this.saldo += valorDeposito;
+            Transferencia deposito = new Transferencia(valorDeposito,"Deposito",this,this);
+            this.historico.add(deposito);
             }else{
                 
             }
@@ -75,10 +77,10 @@ public class Conta{
             this.saldo -= valorDeTransferencia;
             destinoTransferencia.setSaldo(destinoTransferencia.getSaldo()+valorDeTransferencia);
             System.out.println("Transferencia executada com sucesso! \n");
-            Transferencia t = new Transferencia(valorDeTransferencia, "PIX enviado", this, destinoTransferencia);
-            this.historico.add(t);
-            Transferencia td = new Transferencia(valorDeTransferencia, "PIX recebido", this, destinoTransferencia);
-            destinoTransferencia.historico.add(td);
+            Transferencia transferenciaRemetente = new Transferencia(valorDeTransferencia, "PIX enviado", this, destinoTransferencia);
+            this.historico.add(transferenciaRemetente);
+            Transferencia transferenciaDestino = new Transferencia(valorDeTransferencia, "PIX recebido", this, destinoTransferencia);
+            destinoTransferencia.historico.add(transferenciaDestino);
             System.out.println(this.historico);
             System.out.println(destinoTransferencia.historico);
         }

@@ -16,8 +16,12 @@ public class Transferencia{
     public String toString(){
         if(this.tipo.equalsIgnoreCase("PIX enviado")){
             return this.tipo + " de: R$" + this.valor + " ao " + this.destino;
-        }else{
+        }else if (this.tipo.equalsIgnoreCase("PIX recebido")){
             return this.tipo + " de: R$" + this.valor + " de " + this.remetente;
+        }else if (this.tipo.equalsIgnoreCase("Deposito")){
+            return this.tipo + " de: R$" + this.valor;
+        }else if (this.tipo.equalsIgnoreCase("Saque")){
+            return this.tipo + " de: R$" + this.valor;
         }
         
     }

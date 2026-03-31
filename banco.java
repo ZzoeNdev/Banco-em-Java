@@ -44,24 +44,31 @@ public class banco {
         boolean sair = false;
         boolean contaCriada = false;
         Conta minhaConta = null;
+        Conta respostaConta = null;
 
         ArrayList<Conta> Contas = new ArrayList<> ();
-        Conta itaroConta = new Conta("Itaro");
-        itaroConta.ativarConta();
-        Conta mateusConta = new Conta("Mateus");
-        mateusConta.ativarConta();
 
         System.out.println("Deseja criar uma conta? S/N");
         String resposta = read.nextLine();
         
         if (resposta.equalsIgnoreCase("S")){
-            //Crio a minha conta no banco
-            minhaConta = new Conta("Enzzo");
+
+            System.out.println("Qual o seu nome? (Será o nome da sua conta)");
+            resposta = read.nextLine();
+            minhaConta = new Conta(resposta);
+
+            System.out.println("Qual o nome da segunda conta?");
+            resposta = read.nextLine();
+            respostaConta = new Conta(resposta);
+            System.out.println("Id da conta ");
+
+            System.out.println("Qual o nome da terceira conta?");
+            resposta = read.nextLine();
+            respostaConta = new Conta(resposta);
+
             contaCriada = true;
-            Contas.add(minhaConta);
-            Contas.add(itaroConta);
-            Contas.add(mateusConta);
-            System.out.println(Contas.size());
+
+
         }else if (resposta.equalsIgnoreCase("N")){
             System.out.println("Encerrando...");
             read.close();
@@ -95,6 +102,22 @@ public class banco {
                 read.nextLine();
                 Calculo(valorDesejado); 
                 minhaConta.sacar(valorDesejado);
+            }catch(Exception e){
+                System.out.println("Escreva somente numeros");
+            }
+
+        }
+
+        if (resposta.equalsIgnoreCase("2")){
+            
+            System.out.println("Quanto deseja depositar?");
+
+            //Tenta executar o codigo abaixo, se der erro vai para o catch (Para o não)
+            try{
+                int valorDesejado = read.nextInt();
+                read.nextLine(); 
+                minhaConta.deposito(valorDesejado);
+                resposta = "1";
             }catch(Exception e){
                 System.out.println("Escreva somente numeros");
             }
@@ -140,9 +163,7 @@ public class banco {
         }
 
         if(resposta.equalsIgnoreCase("6")){
-                System.out.println("Nome: "+minhaConta.getNome()+"\nId: "+minhaConta.getId()+"\nSaldo: R$"+minhaConta.getSaldo());
-                System.out.println("Nome: "+itaroConta.getNome()+"\nId: "+itaroConta.getId()+"\nSaldo: R$"+itaroConta.getSaldo());
-                System.out.println("Nome: "+mateusConta.getNome()+"\nId: "+mateusConta.getId()+"\nSaldo: R$"+mateusConta.getSaldo());
+                System.out.println("Nome: " + minhaConta.getNome() + "\nId: "+minhaConta.getId() + "\nSaldo: R$" +minhaConta.getSaldo());
 
         }
 
