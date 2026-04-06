@@ -42,31 +42,52 @@ public class banco {
         //Crio a utilidade Scanner, que le as respostas do console (é necessario importar a utilidade Scanner)
         Scanner read = new Scanner(System.in);
         boolean sair = false;
-        boolean contaCriada = false;
+        boolean usuarioLogado = false;
         Conta minhaConta = null;
         Conta respostaConta = null;
 
-        ArrayList<Conta> Contas = new ArrayList<> ();
+        ArrayList<Conta> contas = new ArrayList<> ();
 
         System.out.println("Deseja criar uma conta? S/N");
         String resposta = read.nextLine();
         
         if (resposta.equalsIgnoreCase("S")){
 
-            System.out.println("Qual o seu nome? (Será o nome da sua conta)");
-            resposta = read.nextLine();
-            minhaConta = new Conta(resposta);
+            System.out.println("Crie contas, ou escreva 'pular' para passar o processo");
+            while(true){
+                System.out.println("Qual o nome da nova conta?");
+                resposta = read.nextLine();
+                if (resposta.equalsIgnoreCase("pular")){
+                    break;
+                }
 
-            System.out.println("Qual o nome da segunda conta?");
-            resposta = read.nextLine();
-            respostaConta = new Conta(resposta);
-            System.out.println("Id da conta ");
+                respostaConta = new Conta(resposta);
+                contas.add(respostaConta);
+                System.out.println("Id da conta " + (respostaConta.getId()));
+            }
 
-            System.out.println("Qual o nome da terceira conta?");
-            resposta = read.nextLine();
-            respostaConta = new Conta(resposta);
+            System.out.println("Digite seu ID para acessar sua conta:");
+            int respostaId = read.nextInt();
+            read.nextLine();
 
-            contaCriada = true;
+            while(!usuarioLogado){
+                for (int i = 0; i < contas.size(); i++){
+                    if(contas.get(i).getId() == respostaId){
+                        minhaConta = contas.get(i);
+                        usuarioLogado = true;
+                        System.out.println("Login bem-sucedido!");
+                        break;
+                    }
+                }
+
+                if(!usuarioLogado){
+                    System.out.println("ID não encontrado, por favor verifique e tente novamente.");
+                    respostaId = read.nextInt();
+                    read.nextLine();
+                }
+            }
+            
+            
 
 
         }else if (resposta.equalsIgnoreCase("N")){
@@ -74,9 +95,9 @@ public class banco {
             read.close();
         }
 
-        if (contaCriada){
+        if (usuarioLogado){
 
-        System.out.println("---Menu Inicial---");
+        System.out.println("---Menu Inicial (Seja Bem-vindo(a) " + minhaConta.getNome() + ")---");
         //Ativação da conta
         minhaConta.ativarConta();
         //Acesso saldo da minha conta e decido o valor dele
@@ -128,24 +149,35 @@ public class banco {
                 System.out.println("Qual valor deseja transferir?");
                 int valorDesejado = read.nextInt();
                 read.nextLine();
-                System.out.println("Para quem deseja transferir?");
-                String destinoDesejado = read.nextLine();
-
-                if(destinoDesejado.equalsIgnoreCase(minhaConta.getNome())){
-                    System.out.println("Não pode enviar dinheiro pra si mesmo");
-                }
+                
+                System.out.println("Digite o ID para quem deseja transferir: (Digite '0' para sair do modo Transferencia)");
+                int destinoDesejado = read.nextInt();
+                read.nextLine();
 
                 boolean contaEncontrada = false;
-                for (int i = 0; i < Contas.size(); i++){
-                    if(Contas.get(i).getNome().equalsIgnoreCase(destinoDesejado)){
-                        minhaConta.transferir(valorDesejado, Contas.get(i));
-                        contaEncontrada = true;
+
+                while(!contaEncontrada){
+
+                    if(destinoDesejado == 0){
                         break;
                     }
-                }
 
-                if(!contaEncontrada){
-                    System.out.println("Usuário não encontrado...");
+                    for (int i = 0; i < contas.size(); i++){
+                        if(contas.get(i).getId() == destinoDesejado){
+                            if(minhaConta.transferir(valorDesejado, contas.get(i))){
+                                contaEncontrada = true;
+                            }else{
+                               System.out.println("Erro ao transferir"); 
+                            }
+                            break;
+                        }
+                    }
+
+                        if(!contaEncontrada){
+                            System.out.println("Usuário não encontrado, tente novamente.");
+                            destinoDesejado = read.nextInt();
+                            read.nextLine();
+                        }
                 }
             resposta = "1";
         }
@@ -175,7 +207,7 @@ public class banco {
         }
 
     }else{
-        System.out.println("A conta não foi criada");
+        System.out.println("Usuário não encontrado");
     }
     }
     }

@@ -35,7 +35,7 @@ public class Conta{
                 System.out.println("O valor tem q ser positivo");
             }
         }else{
-            System.out.println("Sua conta "+this.nome+" não esta ativa");
+            System.out.println("Sua conta " + this.nome + " não esta ativa");
         }
     }
 
@@ -47,11 +47,15 @@ public class Conta{
     //Usamos esse metodo (função) para fazer o desconto do valor que foi desejado no saldo
     public void sacar(int valorSaque){
         if (contaAtivada){
-            if (valorSaque <= this.saldo){
+            if (valorSaque > this.saldo || valorSaque <= 0){
+                System.out.println("Você não tem saldo suficiente para essa transferencia");
+            }
+
+            if (valorSaque <= this.saldo && valorSaque > 0){
                 this.saldo -= valorSaque;
+                Transferencia saque = new Transferencia(valorSaque, "Saque", this, this);
+                this.historico.add(saque);
                 System.out.println("Saque efetuado");
-            }else{
-                System.out.println("Não há saldo");
             }
         }else{
             System.out.println("Sua conta não esta ativa");
@@ -72,17 +76,37 @@ public class Conta{
         }
     }
 
-    public void transferir(int valorDeTransferencia, Conta destinoTransferencia){
-        if (valorDeTransferencia <= this.saldo && contaAtivada && valorDeTransferencia > 0){
+    public boolean transferir(int valorDeTransferencia, Conta destinoTransferencia){
+        if (valorDeTransferencia > this.saldo || valorDeTransferencia <= 0){
+            System.out.println("Você não tem saldo suficiente para essa transferencia");
+            return false;
+        }
+
+        if(destinoTransferencia.getId() == this.id){
+            System.out.println("Não pode enviar dinheiro pra si mesmo");
+            return false;
+        }
+
+        if(!destinoTransferencia.getAtivacaoConta()){
+            System.out.println("Não pode enviar dinheiro para uma conta inativa");
+            return false;
+        }
+
+        if (contaAtivada && valorDeTransferencia > 0){
             this.saldo -= valorDeTransferencia;
             destinoTransferencia.setSaldo(destinoTransferencia.getSaldo()+valorDeTransferencia);
-            System.out.println("Transferencia executada com sucesso! \n");
             Transferencia transferenciaRemetente = new Transferencia(valorDeTransferencia, "PIX enviado", this, destinoTransferencia);
             this.historico.add(transferenciaRemetente);
             Transferencia transferenciaDestino = new Transferencia(valorDeTransferencia, "PIX recebido", this, destinoTransferencia);
             destinoTransferencia.historico.add(transferenciaDestino);
             System.out.println(this.historico);
             System.out.println(destinoTransferencia.historico);
+            System.out.println(destinoTransferencia.getSaldo());
+            System.out.println("Transferencia executada com sucesso! \n");
+            return true;
+        }else{
+            System.out.println("Valor Invalido ou Conta não ativa \n");
+            return false;
         }
     }
 
@@ -90,6 +114,10 @@ public class Conta{
     public void ativarConta(){
         contaAtivada = true;
         System.out.println("Sua conta foi ativada com sucesso! \n");
+    }
+
+    public boolean getAtivacaoConta(){
+        return contaAtivada;
     }
 
     public void mostrarHistorico(){

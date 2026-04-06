@@ -20,10 +20,9 @@ public class Transferencia{
             return this.tipo + " de: R$" + this.valor + " de " + this.remetente;
         }else if (this.tipo.equalsIgnoreCase("Deposito")){
             return this.tipo + " de: R$" + this.valor;
-        }else if (this.tipo.equalsIgnoreCase("Saque")){
+        }else{
             return this.tipo + " de: R$" + this.valor;
         }
         
     }
-    
 }
