@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 //POO da Conta (Classe)
 public class Conta{
@@ -125,6 +127,20 @@ public class Conta{
             System.out.println("Não há transações no momento...");
         }else{
             System.out.println(this.historico);
+        }
+        
+    }
+
+    public void salvarDados(){
+        try{
+            String dadosBancarios = this.id + ";" + this.nome + ";" + this.saldo + ";" + this.contaAtivada;
+            FileWriter dadosConta = new FileWriter("dados.txt", true);
+            BufferedWriter leitor = new BufferedWriter(dadosConta);
+            leitor.write(dadosBancarios);
+            leitor.newLine();
+            leitor.close(); 
+        }catch(Exception e){
+            System.out.println("Erro ao Salvar Dados");
         }
         
     }

@@ -64,6 +64,7 @@ public class banco {
                 respostaConta = new Conta(resposta);
                 contas.add(respostaConta);
                 System.out.println("Id da conta " + (respostaConta.getId()));
+                respostaConta.salvarDados();
             }
 
             System.out.println("Digite seu ID para acessar sua conta:");
