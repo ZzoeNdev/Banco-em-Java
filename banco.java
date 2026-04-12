@@ -1,7 +1,40 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
+import java.io.*;
 
 public class banco {
+
+    public static void salvar(ArrayList<Conta> arrayContas){
+        try{
+            FileWriter dadosConta = new FileWriter("dados.txt");
+            BufferedWriter escritor = new BufferedWriter(dadosConta);
+            for (int i = 0; i < arrayContas.size(); i++){
+            arrayContas.get(i).salvarDados(escritor);
+        }
+            escritor.close();
+        }catch(Exception e){
+            System.out.println("Erro ao salvar dados: " + e);
+        }
+        
+    }
+
+    public static void criarContas(ArrayList<Conta> arrayContas){
+        try{
+            FileReader leitorDadosConta = new FileReader("dados.txt");
+            BufferedReader leitor = new BufferedReader(leitorDadosConta);
+            String contaRecebida;
+            while ((contaRecebida = leitor.readLine()) != null){
+                String[] partesConta = contaRecebida.split(";");
+                int idRecebido = Integer.parseInt(partesConta[0]);
+                int saldoRecebido = Integer.parseInt(partesConta[2]);
+                boolean ativacaoRecebida = Boolean.parseBoolean(partesConta[3]);
+                Conta contaBanco = new Conta(partesConta[1], saldoRecebido, idRecebido, ativacaoRecebida);
+                arrayContas.add(contaBanco);
+                System.out.println(contaBanco.getId());
+            }
+        }catch(Exception e){
+            System.out.println("Erro ao pegar conta do banco");
+        }
+    }
 
     public static void Calculo(int v){
 
@@ -47,6 +80,7 @@ public class banco {
         Conta respostaConta = null;
 
         ArrayList<Conta> contas = new ArrayList<> ();
+        criarContas(contas);
 
         System.out.println("Deseja criar uma conta? S/N");
         String resposta = read.nextLine();
@@ -55,16 +89,17 @@ public class banco {
 
             System.out.println("Crie contas, ou escreva 'pular' para passar o processo");
             while(true){
+                Random random = new Random();
+                int idAleatorio = random.nextInt(5000);
                 System.out.println("Qual o nome da nova conta?");
                 resposta = read.nextLine();
                 if (resposta.equalsIgnoreCase("pular")){
                     break;
                 }
 
-                respostaConta = new Conta(resposta);
+                respostaConta = new Conta(resposta,0,idAleatorio,false);
                 contas.add(respostaConta);
                 System.out.println("Id da conta " + (respostaConta.getId()));
-                respostaConta.salvarDados();
             }
 
             System.out.println("Digite seu ID para acessar sua conta:");
@@ -139,6 +174,7 @@ public class banco {
                 int valorDesejado = read.nextInt();
                 read.nextLine(); 
                 minhaConta.deposito(valorDesejado);
+                salvar(contas);
                 resposta = "1";
             }catch(Exception e){
                 System.out.println("Escreva somente numeros");
@@ -211,6 +247,6 @@ public class banco {
         System.out.println("Usuário não encontrado");
     }
     }
-    }
+}
 
 

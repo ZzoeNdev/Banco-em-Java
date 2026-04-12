@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
+import java.io.*;
 
 //POO da Conta (Classe)
 public class Conta{
@@ -13,10 +12,11 @@ public class Conta{
     private int saldo;
     ArrayList<Transferencia> historico = new ArrayList<> ();
 
-    public Conta(String nomeDaConta){
+    public Conta(String nomeDaConta, int saldo, int id, boolean ativacao){
+        this.id = id;
         this.nome = nomeDaConta;
-        this.contaAtivada = false;
-        this.saldo = 0;
+        this.contaAtivada = ativacao;
+        this.saldo = saldo;
     }
  
     public String getNome(){
@@ -131,16 +131,13 @@ public class Conta{
         
     }
 
-    public void salvarDados(){
+    public void salvarDados(BufferedWriter escritor){
         try{
             String dadosBancarios = this.id + ";" + this.nome + ";" + this.saldo + ";" + this.contaAtivada;
-            FileWriter dadosConta = new FileWriter("dados.txt", true);
-            BufferedWriter leitor = new BufferedWriter(dadosConta);
-            leitor.write(dadosBancarios);
-            leitor.newLine();
-            leitor.close(); 
+            escritor.write(dadosBancarios);
+            escritor.newLine();
         }catch(Exception e){
-            System.out.println("Erro ao Salvar Dados");
+            System.out.println("Erro ao Salvar Dados: "+ e);
         }
         
     }

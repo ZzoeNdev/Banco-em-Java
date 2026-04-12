@@ -1,4 +1,3 @@
-595;Kaori;0;false
-4539;Enzzo;0;false
-2034;Itaro;0;false
-1901;Kaori;0;false
+2749;Enzo;0;false
+997;Itaro;2200;true
+1606;Laori;0;false
